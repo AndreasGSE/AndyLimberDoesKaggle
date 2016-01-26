@@ -73,6 +73,24 @@ getVar <- function(varNames, frame){
   return(indices)
 }
 
+# Getting a testing set - important I think so that things are kept seperate
+testSet <- function(data){
+  m <- ceiling(nrow(data)/3)
+  subset <- sample(c(1:(3*m)),2*m)
+  test <- data[-subset,]
+  train <- data[subset,]
+  l <- list(train = train, test = test)
+  return(l)
+}
+
+# A separate function for evaluation, just for flexibility
+evaluation <- function(pred, test){
+  score <- mean(ifelse(pred$popularity == test$popularity),1,0)
+  return(score)
+}
+
+
+
 ### A basic decision tree ###
 
 # Function to predict labels. Can supply own variable selection with vars. Uses all by
@@ -121,8 +139,6 @@ predLabs <- function(train, test, vars = NA , pdf = TRUE, csv = TRUE){
 
 
 ### RANDOM TREES ###
-if (!require("randomForest")) install.packages("randomForest"); library(randomForest)
-if (!require("party")) install.packages("party"); library(party)
 if (!require("unbalanced")) install.packages("unbalanced"); library(unbalanced)
 
 # A function that does a similar thing to above, but now using random trees.
@@ -135,29 +151,23 @@ if (!require("unbalanced")) install.packages("unbalanced"); library(unbalanced)
 predLabsRF <- function(train, test, vars = NA, NT = 100, seed = 123, 
                        pdf = FALSE, csv = TRUE, rand = TRUE, dummytest = FALSE,
                        DATA = FALSE){
+  if (!require("randomForest")) install.packages("randomForest"); library(randomForest)
+  if (!require("party")) install.packages("party"); library(party)
+  
   set.seed(seed)
+
   if(is.na(vars)){
     n <- length(names(train)) - 1
     form <- as.formula(paste0("as.factor(popularity)~",
                               paste(names(train)[4:n],collapse = "+")))
-    print(paste0("popularity~", paste(names(train)[4:n],collapse = "+")))
   } else {
     variables <- names(train)[vars]
     features <- paste(variables,collapse = "+")
     form <- as.formula(paste0("as.factor(popularity)~",
                               features))
-    print(paste0("as.factor(popularity)~",
-                 features))
   }
 
-  # Cross validating step
-  if(dummytest){
-    m <- ceiling(nrow(train)/3)
-    subset <- sample(c(1:2*m))
-    test <- train[-subset,]
-    train <- train[subset,]
-    
-  }
+  print("Generating random tree. This may take a while.")
   
   # Creating the random forests. The second method only works for certain seeds.
   if(rand){
@@ -196,15 +206,37 @@ predLabsRF <- function(train, test, vars = NA, NT = 100, seed = 123,
   
 }
 
+# Getting a test set to work with
+trialData <- testSet(train)
+trialTrain <- trialData$train
+trialTest <- trialData$test
+
 # Example run with "importance plot"
 vec <- c(1:(length(names(train))-1)) # all the variables
 
 variables <- c(names(train)[1:2])
 newVec <- vec[-getVar(variables,train)]
-randomFor <- predLabsRF(train,test, csv = TRUE, rand = T, dummytest = T,
-                        vars = newVec, NT = 100, seed = 100)
+randomFor <- predLabsRF(trialTrain,trialTest, csv = TRUE, rand = T, dummytest = T,
+                        vars = newVec, NT = 1000, seed = 999)
 
 
 
 # The plot of which variables are important
 varImpPlot(randomFor)
+
+
+
+# Balancing data
+if (!require("DMwR")) install.packages("DMwR"); library(DMwR)
+
+variables <- names(train)[newVec]
+features <- paste(variables,collapse = "+")
+form <- as.formula(paste0("popularity~",
+                          features))
+train[,"popularity"] <- as.factor(train[,"popularity"])
+newData <- SMOTE(form, train, perc.over = 10000, k = 8)
+
+randomFor <- predLabsRF(rbind(train,newData),test, csv = TRUE, rand = T, dummytest = F,
+                        vars = newVec, NT = 1000, seed = 100)
+
+
