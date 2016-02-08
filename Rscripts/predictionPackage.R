@@ -89,6 +89,7 @@ evaluation <- function(pred, test){
   return(score)
 }
 
+# Getting the titles of articles
 getTitles <- function(train,test){
   n <- nrow(train)
   comb <- rbind(train,test) # Combining the two to make easier
@@ -119,74 +120,26 @@ test <- reslist$test
 train$Title <- as.numeric(nchar(train$Title))
 test$Title <- as.numeric(nchar(test$Title))
 
-# train$google <- 0
-# train$apple <- 0
-# 
-# train$google[grep("google", train$Title)] <- 1
-# train$apple[grep("apple", train$Title)] <- 1
-# 
-# 
-# test$google <- 0
-# test$apple <- 0
-# 
-# test$google[grep("google", test$Title)] <- 1
-# test$apple[grep("apple", test$Title)] <- 1
-
-
-
-# how can we get something to show how "different" it is
-compare <- function(word){
-  (table(train$popularity[grep(word,train$Title)])/length(train$popularity[grep(word,train$Title)]) - 
-    table(train$popularity[grep("?",train$Title)])/length(train$popularity[grep("?",train$Title)]))*100
+# Adding a new "channel" for other
+getOther <- function(train,test){
+  n <- nrow(train)
+  comb <- rbind(train,test)
+  other <- comb[,15] == 0 & comb[,16] == 0 & comb[,17] == 0 & comb[,18] == 0 & 
+    comb[,19] == 0 & comb[,20] == 0
+  
+  comb$data_channel_is_other <- ifelse(other, 1,0)
+  
+  m <- ncol(comb)
+  comb <- comb[,c(1:(m-2), m, (m-1))]
+  
+  reslist <- list(train = comb[1:n,], test = test[-(1:n),]) 
+  
+  return(reslist)
 }
 
-
-### A basic decision tree ###
-
-# Function to predict labels. Can supply own variable selection with vars. Uses all by
-# default. Default to save tree graph and csv for submission. Return dataframe
-predLabs <- function(train, test, vars = NA , pdf = TRUE, csv = TRUE){
-  set.seed(seed)
-  
-  # Getting the variables. Included some print functions just to de-bug
-  if(is.na(vars)){
-    n <- length(names(train)) - 1
-    form <- as.formula(paste0("as.factor(popularity)~",
-                              paste(names(train)[4:n],collapse = "+")))
-    print(paste0("popularity~", paste(names(train)[4:n],collapse = "+")))
-  } else {
-    variables <- names(train)[vars]
-    features <- paste(variables,collapse = "+")
-    form <- as.formula(paste0("as.factor(popularity)~",
-                              features))
-    print(paste0("as.factor(popularity)~",
-                 features))
-  }
-  
-  
-  # Creating the tree
-  tree <- rpart(formula = form, data = train, method = "class")
-  
-  # Saving the diagram to pdf
-  if(pdf){
-    pdf("treediagram.pdf")
-    fancyRpartPlot(tree)
-    dev.off()
-  }
-  
-  # Getting predicted labels
-  print("Getting labels")
-  Prediction <- predict(tree, test, type = "class")
-  popularityClass <- data.frame(id = test$id, popularity = Prediction)
-  
-  if(csv){
-    write.csv(popularityClass,"kagglesub.csv", row.names = F, quote = F)
-  }
-  
-  return(popularityClass)
-}
-
-
+reslist <- getOther(train,test)
+train <- reslist$train
+test <- reslist$test
 
 ### RANDOM TREES ###
 if (!require("unbalanced")) install.packages("unbalanced"); library(unbalanced)
@@ -198,7 +151,7 @@ if (!require("unbalanced")) install.packages("unbalanced"); library(unbalanced)
 # Set NT for the number of trees - 100 provides a pretty good result
 # PDF = TRUE CURRENTLY DOES NOT WORK
 # NOTE that dummytest = T will not provide a "submittable" CSV file
-predLabsRF <- function(train, test, vars = NA, NT = 100, seed = 123, 
+predLabsRF <- function(train, test, vars = NA, NT = 100, NS = 20, MT = 99999, seed = 123, 
                        pdf = FALSE, csv = TRUE, rand = TRUE, dummytest = FALSE,
                        DATA = FALSE){
   if (!require("randomForest")) install.packages("randomForest"); library(randomForest)
@@ -221,8 +174,8 @@ predLabsRF <- function(train, test, vars = NA, NT = 100, seed = 123,
   
   # Creating the random forests. The second method only works for certain seeds.
   if(rand){
-    randomTree <- randomForest(form, data = train, importance = TRUE, ntree = NT, 
-                               mtry = 9, OOB = T)
+    randomTree <- randomForest(form, data = train, importance = TRUE, ntree = NT,
+                               OOB = T, nodesize = NS, mtry = MT)
     Prediction <- predict(randomTree, test, type = "class")
     
   } else {
@@ -262,23 +215,34 @@ trialData <- testSet(train)
 trialTrain <- trialData$train
 trialTest <- trialData$test
 
-# train$num_media <- train$num_imgs + train$num_videos
-# test$num_media <- test$num_imgs + test$num_videos
-# 
-# trialTrain$pct_video <- trialTrain$num_videos / trialTrain$num_media
-# trialTest$pct_video <- trialTest$num_videos / trialTest$num_media
-
+randomFor <- predLabsRF(trialTrain,trialTest, 
+                        csv = F, rand = T, dummytest = T,
+                        vars = newVec, NT = 500, NS = 25)
 
 # Example run with "importance plot"
 vec <- c(1:(length(names(train)))) # all the variables
 
-variables <- c(names(train)[1:2],"popularity")
+variables <- c(names(train)[1:2],"popularity", "data_channel_is_other")
 newVec <- vec[-getVar(variables,train)]
 
 randomFor <- predLabsRF(train,test, 
                         csv = T, rand = T, dummytest = F,
-                        vars = newVec, NT = 500, seed = 696)
+                        vars = newVec, NT = 1000,
+                        DATA = F, NS = 35)
 
+# LOOKING AT IMPORTANCE
+impvarG <- order(randomFor$importance[,6], decreasing = T)
+n <- length(impvarG)
+notImp <- names(train)[(impvarG + 2)]
+notImp <- notImp[(n-10):n]
+
+variables <- c(names(train)[1:2],"popularity", "data_channel_is_other")
+newVec <- vec[-getVar(variables,train)]
+
+randomFor <- predLabsRF(trialTrain,trialTest, 
+                        csv = F, rand = T, dummytest = T,
+                        vars = newVec, NT = 500, NS = 25, MT = 10)
+# so far 11 is the best
 
 # The plot of which variables are important
 varImpPlot(randomFor)
@@ -306,4 +270,8 @@ for(i in 1:7){
                           csv = F, rand = T, dummytest = T,
                           vars = newVec, NT = 100, seed = 100)
 }
+
+# rate of media per words?
+
+# Need to look a bit at removing features in exchange for more trees to see if improves
 

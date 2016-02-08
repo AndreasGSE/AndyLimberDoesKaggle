@@ -1,1 +1,4 @@
 Folder to have some of our generic Rscripts
+
+Predictiontrees.R includes more stuff as it was a first run through of the trees looked at.
+predictionPackage.R is a slimmed down version that will be used to create the package and so does not include all of the same things as the predictiontrees.R does - can be considered "more up to date".
