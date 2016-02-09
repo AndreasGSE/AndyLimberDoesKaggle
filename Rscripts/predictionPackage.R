@@ -151,7 +151,7 @@ if (!require("unbalanced")) install.packages("unbalanced"); library(unbalanced)
 # Set NT for the number of trees - 100 provides a pretty good result
 # PDF = TRUE CURRENTLY DOES NOT WORK
 # NOTE that dummytest = T will not provide a "submittable" CSV file
-predLabsRF <- function(train, test, vars = NA, NT = 100, NS = 20, MT = 99999, seed = 123, 
+predLabsRF <- function(train, test, vars = NA, NT = 100, NS = 25, MT = 99999, seed = 123, 
                        pdf = FALSE, csv = TRUE, rand = TRUE, dummytest = FALSE,
                        DATA = FALSE){
   if (!require("randomForest")) install.packages("randomForest"); library(randomForest)
@@ -222,15 +222,19 @@ randomFor <- predLabsRF(trialTrain,trialTest,
 # Example run with "importance plot"
 vec <- c(1:(length(names(train)))) # all the variables
 
-variables <- c(names(train)[1:2],"popularity", "data_channel_is_other")
+variables <- c(names(train)[1:2],"popularity")
 newVec <- vec[-getVar(variables,train)]
 
 randomFor <- predLabsRF(train,test, 
                         csv = T, rand = T, dummytest = F,
                         vars = newVec, NT = 1000,
-                        DATA = F, NS = 35)
+                        DATA = F, NS = 25, MT = 12)
 
 # LOOKING AT IMPORTANCE
+trialData <- testSet(train)
+trialTrain <- trialData$train
+trialTest <- trialData$test
+
 impvarG <- order(randomFor$importance[,6], decreasing = T)
 n <- length(impvarG)
 notImp <- names(train)[(impvarG + 2)]
@@ -241,7 +245,7 @@ newVec <- vec[-getVar(variables,train)]
 
 randomFor <- predLabsRF(trialTrain,trialTest, 
                         csv = F, rand = T, dummytest = T,
-                        vars = newVec, NT = 500, NS = 25, MT = 10)
+                        vars = newVec, NT = 1000, NS = 25, MT = 12)
 # so far 11 is the best
 
 # The plot of which variables are important

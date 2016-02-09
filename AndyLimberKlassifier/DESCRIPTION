@@ -1,0 +1,20 @@
+Package: AndyLimberKlassifier
+Title: News article popularity classifier for Kaggle competition.
+Version: 0.0.0.9000
+Authors@R: c(
+	person("Andreas", "Lloyd", email = "andreas.lloyd@barcelonagse.eu", role = c("aut", "cre")),
+	person("Francis", "Moynihan IV", email = "francis.moynihaniv@barcelonagse.eu", role = c("wdc")),
+	person("Seda", "Yilmaz", email = "feyza.yilmaz@barcelonagse.eu", role = c("cst")))
+Description: Package provides the classification used for the Kaggle competition
+    "predicting online news popularity". The package provides flexibility in
+    specification of the classification, with defaults arguments those used for
+    kaggle submissions. The data must be provided initially in the form of a test
+    and training set. If it is desired to do an out of sample cross validation, then
+    an argument allows this as long as the popularity values are provi ded.
+Depends:
+    R (>= 3.2.2),
+    assertthat,
+    randomForest
+License: Should only be used under strict Andy Limber business.
+LazyData: true
+RoxygenNote: 5.0.1
