@@ -33,13 +33,13 @@ alKK <- function(train, test, NT = 1000, MT = 12, NS = 25, imp = FALSE,
   library(assertthat)
   not_empty(test); not_empty(train);
 
-  if(Xtest) assert_that(!is.na(test$popularity)) # making sure we have values
+  if(Xtest) see_if(noNA(test$popularity)) # making sure we have values
 
   if(!Xtest) test$popularity <- NA # filling in the column for later
 
   # Will not work if things are in a different order / under different names
   assert_that(ncol(train) == ncol(test))
-  assert_that(names(train) == names(test))
+  are_equal(names(train), names(test))
 
   # Combining the data frames to manipulate variables
   nTrain <- nrow(train)
@@ -79,14 +79,14 @@ alKK <- function(train, test, NT = 1000, MT = 12, NS = 25, imp = FALSE,
       return(word)
     }))
 
-    comb$Title <- title
+    comb$Title <- nchar(title)
 
     # Re-arranging the columns otherwise trees aren't happy
     a <- ncol(comb)
     comb <- comb[, c(1:(a-2),a,(a-1))]
 
     return(comb)
-  } # FIX FOR LENGTH
+  }
 
   comb <- getTitles(comb)
 

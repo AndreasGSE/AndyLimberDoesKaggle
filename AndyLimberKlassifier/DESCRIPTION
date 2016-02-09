@@ -10,9 +10,9 @@ Description: Package provides the classification used for the Kaggle competition
     specification of the classification, with defaults arguments those used for
     kaggle submissions. The data must be provided initially in the form of a test
     and training set. If it is desired to do an out of sample cross validation, then
-    an argument allows this as long as the popularity values are provi ded.
+    an argument allows this as long as the popularity values are provided.
 Depends:
-    R (>= 3.2.2),
+    R (>= 3.0.0),
     assertthat,
     randomForest
 License: Should only be used under strict Andy Limber business.

@@ -245,7 +245,7 @@ newVec <- vec[-getVar(variables,train)]
 
 randomFor <- predLabsRF(trialTrain,trialTest, 
                         csv = F, rand = T, dummytest = T,
-                        vars = newVec, NT = 1000, NS = 25, MT = 12)
+                        vars = newVec, NT = 500, NS = 25, MT = 12)
 # so far 11 is the best
 
 # The plot of which variables are important
