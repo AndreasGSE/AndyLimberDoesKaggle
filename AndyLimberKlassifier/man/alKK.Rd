@@ -36,6 +36,8 @@ The random forest model as well as a CSV of predictions
 if CSV is set to TRUE.
 }
 \description{
-Assign popularity values to news articles for submission to Kaggle
+Assign popularity values to news articles for submission to Kaggle. Can be used with
+any set of features as unreferenced by name, but best submission includes feature generation
+done by the alFeatuerGen function.
 }
 

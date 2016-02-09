@@ -18,3 +18,4 @@ Depends:
 License: Should only be used under strict Andy Limber business.
 LazyData: true
 RoxygenNote: 5.0.1
+Suggests: testthat

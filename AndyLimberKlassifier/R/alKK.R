@@ -3,7 +3,9 @@
 # --------------------------------------- #
 #' Andy Limber's Kaggle Klassifier
 #'
-#' Assign popularity values to news articles for submission to Kaggle
+#' Assign popularity values to news articles for submission to Kaggle. Can be used with
+#' any set of features as unreferenced by name, but best submission includes feature generation
+#' done by the alFeatuerGen function.
 #'
 #' @param train A dataframe containing the training data for the
 #' popularity classifications.
@@ -35,65 +37,12 @@ alKK <- function(train, test, NT = 1000, MT = 12, NS = 25, imp = FALSE,
 
   if(Xtest) see_if(noNA(test$popularity)) # making sure we have values
 
-  if(!Xtest) test$popularity <- NA # filling in the column for later
-
   # Will not work if things are in a different order / under different names
   assert_that(ncol(train) == ncol(test))
   are_equal(names(train), names(test))
-
-  # Combining the data frames to manipulate variables
-  nTrain <- nrow(train)
-  comb <- rbind(train,test)
-
-  # Pulling out year and month info
-  getDates <- function(comb){
-
-    # Looks for the year and month inside the URL
-    year <- as.vector(sapply(as.character(comb$url), function(x){
-      word <- strsplit(x,"/")[[1]][4]
-      return(word)
-    }))
-
-    months <- as.vector(sapply(as.character(comb$url), function(x){
-      word <- strsplit(x,"/")[[1]][5]
-      return(word)
-    }))
-
-    comb$Year <- as.factor(year)
-    comb$Month <- as.factor(months)
-
-    # Re-arranging the columns to make pretty
-    a <- ncol(comb)
-    comb <- comb[, c(1:(a-3),a,(a-1),(a-2))]
-
-    return(comb)
-  }
-
-  comb <- getDates(comb)
-
-  # Pulling out details of titles of articles
-  getTitles <- function(comb){
-
-    title <- as.vector(sapply(as.character(comb$url), function(x){
-      word <- strsplit(x,"/")[[1]][7]
-      return(word)
-    }))
-
-    comb$Title <- nchar(title)
-
-    # Re-arranging the columns otherwise trees aren't happy
-    a <- ncol(comb)
-    comb <- comb[, c(1:(a-2),a,(a-1))]
-
-    return(comb)
-  }
-
-  comb <- getTitles(comb)
-
-
-  # Splitting comb again. This should always come after any feature analysis
-  train <- comb[1:nTrain,]
-  test <- comb[-(1:nTrain),]
+  
+  # Making sure popularity is the last column
+  assert_that(names(train)[ncol(train)] == "popularity")
 
   if (!require("randomForest")) install.packages("randomForest"); library(randomForest)
 
