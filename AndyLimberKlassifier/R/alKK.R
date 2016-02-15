@@ -5,7 +5,7 @@
 #'
 #' Assign popularity values to news articles for submission to Kaggle. Can be used with
 #' any set of features as unreferenced by name, but best submission includes feature generation
-#' done by the alFeatuerGen function.
+#' done by the alFeatuerGen function (must be called on train and test data separately).
 #'
 #' @param train A dataframe containing the training data for the
 #' popularity classifications.
@@ -32,19 +32,23 @@ alKK <- function(train, test, NT = 1000, MT = 12, NS = 25, imp = FALSE,
   set.seed(seed)
 
   # testing inputs
-  library(assertthat)
+  #library(assertthat)
   not_empty(test); not_empty(train);
 
-  if(Xtest) see_if(noNA(test$popularity)) # making sure we have values
+  if(Xtest){
+    assert_that(noNA(test$popularity)) # making sure we have values
+    assert_that(not_empty(test$popularity))
+  } 
 
   # Will not work if things are in a different order / under different names
-  assert_that(ncol(train) == ncol(test))
-  are_equal(names(train), names(test))
+  assert_that(ncol(train) == ncol(test) | (ncol(train) - 1) == ncol(test))
+  assert_that(are_equal(names(train), names(test)) | 
+                are_equal(names(train), c(names(test), "popularity")))
   
   # Making sure popularity is the last column
   assert_that(names(train)[ncol(train)] == "popularity")
 
-  if (!require("randomForest")) install.packages("randomForest"); library(randomForest)
+  #library(randomForest)
 
   # Getting the variables for formula, requires "popularity" to come last
   vars <- 3:(ncol(train)-1)

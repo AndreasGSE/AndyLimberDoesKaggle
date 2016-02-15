@@ -4,24 +4,19 @@
 \alias{alFeatureGen}
 \title{Andy Limber's Kaggle feature generation}
 \usage{
-alFeatureGen(train, test, Xtest = FALSE)
+alFeatureGen(data)
 }
 \arguments{
-\item{train}{A dataframe containing the training data for the
-popularity classifications.}
-
-\item{test}{A dataframe containing the data to be used to predict labels.
-If a column of NAs is not supplied for the "popularity", one will be added.}
-
-\item{Xtest}{A logical that indicates whether you want to perform some
-cross validation at a later stage. Default is FALSE and a popularity column is added.
-Should be set to TRUE if popularity column is to be unmodified, but non-NA values
-must be provided.}
+\item{data}{A dataframe containing the data for the
+popularity classifications that will be modified. Can be train or test data.
+no modifications are needed.}
 }
 \value{
-A list containing the new "test" and "train" dataframes with added features.
+The modified data with added columns. Currently adds a title length field and
+year and month field.
 }
 \description{
 Generates features from the original training and test data to be used in the classifier.
+If to be used with alKK - must be called on both train and test data
 }
 

@@ -38,6 +38,6 @@ if CSV is set to TRUE.
 \description{
 Assign popularity values to news articles for submission to Kaggle. Can be used with
 any set of features as unreferenced by name, but best submission includes feature generation
-done by the alFeatuerGen function.
+done by the alFeatuerGen function (must be called on train and test data separately).
 }
 
