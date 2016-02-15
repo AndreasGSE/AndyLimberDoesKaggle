@@ -1,0 +1,40 @@
+---
+title: "Andy Limber Klassifier"
+author: "A. Lloyd, F. Moynihan IV, S. Yilmaz"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{"Andy Limber Klassifier"}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The Andy Limber Klassifier is intended to be a package for submission of classifications to the Kaggle competition for Advanced Computing and Machine Learning classes. It is primarily composed of two functions, `alFeatureGen` and `alKK`, which generate additional features and provide classifications, respectively.
+
+The intended usage for submission is to provide features to BOTH the training and test sets and then feeding the modified data into the classifier. This will then save a CSV file of classifications. The actual random forest model will be returned, with or without the importance, as specified by the argument `imp`. All default arguments are the ones used for the current best classification submission.
+```{r, eval=FALSE}
+trainData <- read.csv("news_popularity_training.csv", stringsAsFactors = T)
+testData <- read.csv("news_popularity_test.csv", stringsAsFactors = T)
+
+train <- alFeatureGen(trainData)
+test <- alFeatureGen(testData)
+
+alKK(train, test)
+```
+
+The data provided should be of the same form as that provided by default in the competition with no other modifications, as the `popularity` column is required to be last for the `alKK` function. If modifications have been made, the feature generation will still work, but will re-arrange the columns.
+
+There is also an allowance for cross validating, which can be specified using the `Xtest` argument to `alKK`. This requires training and test data with non-empty and non-NA values for the popularity column. An accuracy value will be printed afterwards.
+```{r, eval=FALSE}
+trainData <- read.csv("news_popularity_training.csv", stringsAsFactors = T)
+
+train <- alFeatureGen(trainData)
+
+subTrain <- train[1:20000,]
+subTest <- train[-(1:20000),]
+
+
+alKK(subTrain, subTest, Xtest = T, CSV = F)
+```
+
+The current added features are just date columns as well as title length columns. In the future, more will hopefully be added and the function will be modified accordingly. Currently the names of the added columns are `Year`, `Month` and `Title`.
