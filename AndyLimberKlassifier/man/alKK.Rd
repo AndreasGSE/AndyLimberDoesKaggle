@@ -4,7 +4,7 @@
 \alias{alKK}
 \title{Andy Limber's Kaggle Klassifier}
 \usage{
-alKK(train, test, NT = 1000, MT = 12, NS = 25, imp = FALSE,
+alKK(train, test, NT = 1000, MT = 12, NS = 25, vars = NA, imp = FALSE,
   seed = 123, Xtest = FALSE, CSV = TRUE)
 }
 \arguments{
@@ -19,6 +19,9 @@ If a column of NAs is not supplied for the "popularity", one will be added.}
 \item{MT}{Integer. The mtry parameter for randomForest.}
 
 \item{NS}{Integer. The nodesize parameter.}
+
+\item{vars}{Vector of column indices for the features to be used in the random forest.
+Defaults to NA and all features are used.}
 
 \item{imp}{Logical. Whether or not the importance should be calculated (default is false).}
 

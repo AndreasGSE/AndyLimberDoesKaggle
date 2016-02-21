@@ -14,6 +14,8 @@
 #' @param NT Integer. The number of trees used by the forest (ntree).
 #' @param MT Integer. The mtry parameter for randomForest.
 #' @param NS Integer. The nodesize parameter.
+#' @param vars Vector of column indices for the features to be used in the random forest.
+#' Defaults to NA and all features are used.
 #' @param imp Logical. Whether or not the importance should be calculated (default is false).
 #' @param seed The seed to be used.
 #' @param Xtest A logical that indicates whether you want to perform some
@@ -27,12 +29,11 @@
 #' @import assertthat
 #' @import randomForest
 
-alKK <- function(train, test, NT = 1000, MT = 12, NS = 25, imp = FALSE,
+alKK <- function(train, test, NT = 1000, MT = 12, NS = 25, vars = NA, imp = FALSE,
                  seed = 123, Xtest = FALSE, CSV = TRUE){
   set.seed(seed)
 
   # testing inputs
-  #library(assertthat)
   not_empty(test); not_empty(train);
 
   if(Xtest){
@@ -48,10 +49,11 @@ alKK <- function(train, test, NT = 1000, MT = 12, NS = 25, imp = FALSE,
   # Making sure popularity is the last column
   assert_that(names(train)[ncol(train)] == "popularity")
 
-  #library(randomForest)
-
   # Getting the variables for formula, requires "popularity" to come last
-  vars <- 3:(ncol(train)-1)
+  if(is.na(vars)){
+    vars <- 3:(ncol(train)-1) # taking all variables
+  }
+  
   variables <- names(train)[vars]
   features <- paste(variables,collapse = "+")
   form <- as.formula(paste0("as.factor(popularity)~",
@@ -70,7 +72,9 @@ alKK <- function(train, test, NT = 1000, MT = 12, NS = 25, imp = FALSE,
 
   # Comparing values for training and test set
   if(Xtest){
-    print(mean(ifelse(popularityClass$popularity == test$popularity, 1, 0)))
+    acc <- mean(ifelse(popularityClass$popularity == test$popularity, 1, 0))
+    print(acc)
+    return(acc)
   }
 
   # Printing CSV
@@ -78,5 +82,5 @@ alKK <- function(train, test, NT = 1000, MT = 12, NS = 25, imp = FALSE,
     write.csv(popularityClass,"kagglesub.csv", row.names = F, quote = F)
   }
 
-  return(randomFor)
+  if(!Xtest) return(randomFor)
 }

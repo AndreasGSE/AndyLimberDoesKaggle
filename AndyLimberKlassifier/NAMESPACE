@@ -2,5 +2,6 @@
 
 export(alFeatureGen)
 export(alKK)
+export(alXvalidate)
 import(assertthat)
 import(randomForest)

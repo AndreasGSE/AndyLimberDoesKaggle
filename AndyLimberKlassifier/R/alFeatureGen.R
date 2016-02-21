@@ -58,6 +58,9 @@ alFeatureGen <- function(data){
   
   data <- getTitles(data)
   
+  # Getting a binary to show if there are any videos in the article
+  data$is_Video <- ifelse(data$num_videos == 0, 0, 1)
+  
   # Re-arranging columns to put popularity last
   data <- data[,c(which(names(data) != "popularity"), which(names(data) == "popularity"))]
   
