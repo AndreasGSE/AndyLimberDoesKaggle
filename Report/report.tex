@@ -1,0 +1,29 @@
+\documentclass[onecolumn,prl,aps,10pt]{revtex4}
+\usepackage{graphicx,bm,times}
+\usepackage{listings}
+
+\begin{document}
+\title{Andy Limber Does Kaggle}
+\author{Andreas Mathew Lloyd, Francis Thomas Moynihan IV, and Feyza Seda Yilmaz}
+\maketitle
+
+\section{I. Introduction}
+Machine learning is a field of study deeply involved in finding patterns in data, using methods that do not require a lot of initial specification of such patterns by the user. That is, provided some data, a machine learning algorithm looks to predict some value (regression) or assign some label (classification) to data points. If the user provides the labels for a training set, this is seen as a \textquotedblleft supervised" problem. Typical learning algorithms for this type of problem include perceptrons \cite{keylist}, k nearest neighbours \cite{keylist}, neural networks, decision trees, and variations on decision trees such as random forests \cite{keylist} and boosted trees \cite{keylist}. These each have their associated advantages and disadvantages, such as computational intensity, resistance to outliers, interpretability, and flexibility. Neural networks, for example, are a famously \textquotedblleft black-box" approach to supervised learning \cite{keylist}.
+
+The problem at hand is to classify articles from the website $mashable$. The original data were provided by the UCI Machine Learning Repository \cite{keylist}, including data about the content of the article, the sentiment of the article, publishing details, and so on. The primary measure for popularity was the number of shares, which have been categorised on a scale of $1 - 5$, where $1$ represents the least popular article, and $5$ the most. The distribution of these rankings is shown in table \ref{}.
+
+This is treated as a supervised learning problem and was primarily tackled using decision tress of different variations, as well as some experimentation with neural networks. The original reasoning for this was the flexibility provided, and because no obvious initial relations were apparent.
+
+\section{II. Theory}
+The methods discussed will be the random forest and extreme gradient boosting (XG boost) algorithms. Neural networks will not be discussed here but mentioned briefly in the comparison of methods. Both of these methods rely on decision trees. 
+
+Given an $N \times M$ data set of features, the core operation of a decision tree is to split some set of data in half, such that (using a majority classifier) the split minimises error. This process is run recursively, building up the \textquotedblleft tree", where the \textquotedblleft branches" are the splits, and \textquotedblleft leaves" are the classification of that half of data. If allowed to run until each leaf contains only one data point, any decision tree will severely overfit the data, so several conditions are imposed to limit growth. Typical examples of these are limiting the depth of the tree (how many leaf nodes), and how many data points any given node must have. 
+
+To improve, several modifications can be made, some of which are implemented in their own algorithms and are discussed here.
+
+\subsection{A. Random Forest}
+ 
+
+
+
+\end{document}
