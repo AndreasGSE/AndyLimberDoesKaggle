@@ -5,7 +5,8 @@
 # Otherwise there is a thing of variable selection, but inclusion of all of them
 # seems to be the best. Creation of new variables is another shout.
 
-
+setwd("C:\\Users\\Dre\\Dropbox\\Barna\\Master\\AdvancedComputing\\kagglecomp\\AndyLimberDoesKaggle\\AndyLimberKlassifier")
+setwd("C:\\Users\\Dre\\Dropbox\\Barna\\Master\\AdvancedComputing\\kagglecomp\\AndyLimberDoesKaggle\\AndyLimberKlassifier\\tests")
 setwd("C:\\Users\\Dre\\Desktop\\Data")
 
 library(rpart)
@@ -121,23 +122,38 @@ train$Title <- as.numeric(nchar(train$Title))
 test$Title <- as.numeric(nchar(test$Title))
 
 # Adding a new "channel" for other
-getOther <- function(train,test){
+getProp <- function(train,test){
   n <- nrow(train)
   comb <- rbind(train,test)
-  other <- comb[,15] == 0 & comb[,16] == 0 & comb[,17] == 0 & comb[,18] == 0 & 
-    comb[,19] == 0 & comb[,20] == 0
   
-  comb$data_channel_is_other <- ifelse(other, 1,0)
+  tot_med <- comb$num_imgs+comb$num_videos
   
-  m <- ncol(comb)
-  comb <- comb[,c(1:(m-2), m, (m-1))]
+  comb$n_t_c_m <- comb$n_tokens_content/tot_med
+  comb$n_t_c_i <- comb$n_tokens_content/comb$num_imgs
+  comb$n_t_c_v <- comb$n_tokens_content/comb$num_videos
   
-  reslist <- list(train = comb[1:n,], test = test[-(1:n),]) 
+  comb$n_u_c_m <- comb$n_unique_tokens/tot_med
+  comb$n_u_c_i <- comb$n_unique_tokens/comb$num_imgs
+  comb$n_u_c_v <- comb$n_unique_tokens/comb$num_videos
   
+  comb$self_reference_range_shares <- comb$self_reference_max_shares-comb$self_reference_min_shares
+  
+  comb$kw_max_range <- comb$kw_max_max - comb$kw_max_min
+  comb$kw_avg_range <- comb$kw_avg_max - comb$kw_avg_min
+  comb$kw_min_range <- comb$kw_min_max - comb$kw_min_min
+  
+  comb$global_diff_rate <- comb$global_rate_positive_words - comb$global_rate_negative_words
+  comb$avg_pol_diff <- comb$avg_positive_polarity - comb$avg_negative_polarity
+  
+  comb <- comb[,c(which(names(comb) != "popularity"), which(names(comb) == "popularity"))]
+  
+  reslist <- list(train = comb[1:n,],
+                  test = comb[(n+1):nrow(comb),])
   return(reslist)
 }
 
-reslist <- getOther(train,test)
+reslist <- getProp(train, test)
+
 train <- reslist$train
 test <- reslist$test
 
@@ -219,10 +235,30 @@ randomFor <- predLabsRF(trialTrain,trialTest,
                         csv = F, rand = T, dummytest = T,
                         vars = newVec, NT = 500, NS = 25)
 
+# FEATURE TESTING AREA
+toElim <- names(train)[(ncol(train)-12):(ncol(train) - 1)]
+toElim <- toElim[-c(7,11)]
+
+vec <- c(1:(length(names(train)))) # all the variables
+
+variables <- c(names(train)[1:2],"popularity", toElim, "weekday_is_monday", "weekday_is_wednesday")
+variables <- c(names(train)[1:2],"popularity", toElim)
+
+newVec <- vec[-getVar(variables,train)]
+
+randomFor <- predLabsRF(trialTrain,trialTest, 
+                        csv = F, rand = T, dummytest = T,
+                        vars = newVec, NT = 500, NS = 25, MT = 12)
+
+
+head(sort(randomFor$importance[,6]))
+head(sort(randomFor$importance[,7]))
+sum(randomFor$importance[,6]) + sum(randomFor$importance[,7])
+varImpPlot(randomFor)
 # Example run with "importance plot"
 vec <- c(1:(length(names(train)))) # all the variables
 
-variables <- c(names(train)[1:2],"popularity")
+variables <- c(names(train)[1:2],"popularity", toElim)
 newVec <- vec[-getVar(variables,train)]
 
 randomFor <- predLabsRF(train,test, 
