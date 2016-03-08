@@ -1,7 +1,3 @@
-setwd("/home/rook/R/kaggle")
-trainData <- read.csv("news_popularity_training.csv", stringsAsFactors = T)
-testData <- read.csv("news_popularity_test.csv", stringsAsFactors = T)
-
 
 # ---------------------------------------#
 #        Kaggle XGBoost Function         #
