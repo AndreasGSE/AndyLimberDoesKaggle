@@ -7,7 +7,7 @@ testForest <- alKK(trainN, testN, NT = 10, CSV = F)
 
 # Expect output of the form "model"
 test_that("Structure of output", {
-  expect_output(str(testForest), "language randomForest")
+  expect_output(str(testForest), "data.frame")
 })
 
 # Xtesting

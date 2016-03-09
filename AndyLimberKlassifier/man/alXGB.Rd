@@ -44,6 +44,8 @@ Will over-ride other returned values.}
 
 \item{CSV}{A logical that indicates whether a CSV of predictions should be
 saved. Default is TRUE.}
+
+\item{seed}{The seed to be used.}
 }
 \value{
 Returns the predicted labels, probabilities and IDs, as well 

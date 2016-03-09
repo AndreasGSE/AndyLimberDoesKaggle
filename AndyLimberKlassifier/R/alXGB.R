@@ -24,6 +24,7 @@
 #' number of trees to grow per interation.
 #' @param vars Vector of variables to be EXCLUDED from the training. Note
 #' that this is differently defined to the random forest function.
+#' @param seed The seed to be used.
 #' @param Xtest A logical that indicates whether you want to perform some
 #' cross validation. Default is FALSE. If TRUE, will print an accuracy value.
 #' Will over-ride other returned values.
