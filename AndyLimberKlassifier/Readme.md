@@ -8,4 +8,6 @@ There will be errors generated if the data is not of the exact right form, with 
 
 If the argument "Xtest" is set to TRUE, then the test set provided must have non-NA values for popularity and the code will finish with providing an "out of sample" accuracy as found from the prediction.
 
+A function alXval is also provided to allow a k fold cross validation, packaged into a simple function. The function will just run the classification on k separate samples to validate and test any changes made. All the normal parameters can be played with.
+
 The default return is a CSV file ready for submission as well as the random forest model. Importance can be specified so that the importance plot can be made later.

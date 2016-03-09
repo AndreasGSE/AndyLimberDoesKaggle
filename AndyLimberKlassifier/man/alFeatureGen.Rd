@@ -12,8 +12,8 @@ popularity classifications that will be modified. Can be train or test data.
 no modifications are needed.}
 }
 \value{
-The modified data with added columns. Currently adds a title length field and
-year and month field.
+The modified data with added columns. Currently adds a binary on
+whether there is a video, a title length field and year and month field.
 }
 \description{
 Generates features from the original training and test data to be used in the classifier.

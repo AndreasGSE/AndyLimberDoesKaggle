@@ -29,14 +29,15 @@ Defaults to NA and all features are used.}
 
 \item{Xtest}{A logical that indicates whether you want to perform some
 cross validation. Default is FALSE. If TRUE, will print an accuracy value.
-Must supply values for popularity.}
+Must supply values for popularity. Will over-ride other returned values.}
 
 \item{CSV}{A logical that indicates whether a CSV of predictions should be
 saved. Default is TRUE.}
 }
 \value{
-The random forest model as well as a CSV of predictions
-if CSV is set to TRUE.
+Returns the predicted labels, probabilities and IDs, as well 
+as a CSV of predictions if CSV is set to TRUE.
+If Xtest is set to true, will return an accuracy.
 }
 \description{
 Assign popularity values to news articles for submission to Kaggle. Can be used with

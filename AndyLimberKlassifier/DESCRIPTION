@@ -14,7 +14,8 @@ Description: Package provides the classification used for the Kaggle competition
 Depends:
     R (>= 3.0.0),
     assertthat,
-    randomForest
+    randomForest,
+    xgboost
 License: Should only be used under strict Andy Limber business.
 LazyData: true
 RoxygenNote: 5.0.1

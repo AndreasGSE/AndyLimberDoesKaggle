@@ -12,7 +12,7 @@
 #' @param nr Integer. The maximum number of rounds performed.
 #' @param eta Double. Controls the learning rate, 0 < eta < 1, determines the level 
 #' of contribution of each tree.
-#' @parma gamma Integer. Minimum loss reduction required to make a futher cut on a 
+#' @param gamma Integer. Minimum loss reduction required to make a futher cut on a 
 #' leaf node, a larger value for this parameter translates to a more 
 #' conservative algorithm. 
 #' @param mcw Integer. Minimum child weight: minimum sum of instance weight needed 
