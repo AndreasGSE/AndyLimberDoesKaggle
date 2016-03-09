@@ -9,15 +9,14 @@
 #' @param data A dataframe containing the data for the
 #' popularity classifications that will be modified. Can be train or test data.
 #' no modifications are needed.
-#' @return The modified data with added columns. Currently adds a title length field and
-#' year and month field.
+#' @return The modified data with added columns. Currently adds a binary on
+#' whether there is a video, a title length field and year and month field.
 #' @export
 #' @import assertthat
 
 alFeatureGen <- function(data){
   
   # testing inputs
-  #library(assertthat)
   not_empty(data)
   not_empty(data$url)
   

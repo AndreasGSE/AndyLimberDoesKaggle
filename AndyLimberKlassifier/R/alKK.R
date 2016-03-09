@@ -20,11 +20,12 @@
 #' @param seed The seed to be used.
 #' @param Xtest A logical that indicates whether you want to perform some
 #' cross validation. Default is FALSE. If TRUE, will print an accuracy value.
-#' Must supply values for popularity.
+#' Must supply values for popularity. Will over-ride other returned values.
 #' @param CSV A logical that indicates whether a CSV of predictions should be
 #' saved. Default is TRUE.
-#' @return The random forest model as well as a CSV of predictions
-#' if CSV is set to TRUE.
+#' @return Returns the predicted labels, probabilities and IDs, as well 
+#' as a CSV of predictions if CSV is set to TRUE.
+#' If Xtest is set to true, will return an accuracy.
 #' @export
 #' @import assertthat
 #' @import randomForest
@@ -67,8 +68,11 @@ alKK <- function(train, test, NT = 1000, MT = 12, NS = 25, vars = NA, imp = FALS
   # Predicting labels
   print("Getting labels")
   Prediction <- predict(randomFor, test, type = "class")
+  probs <- predict(randomFor, test, type = "prob")
 
   popularityClass <- data.frame(id = test$id, popularity = Prediction)
+  
+  popularityClass <- cbind(popularityClass, probs)
 
   # Comparing values for training and test set
   if(Xtest){
@@ -82,5 +86,5 @@ alKK <- function(train, test, NT = 1000, MT = 12, NS = 25, vars = NA, imp = FALS
     write.csv(popularityClass,"kagglesub.csv", row.names = F, quote = F)
   }
 
-  if(!Xtest) return(randomFor)
+  return(popularityClass)
 }
