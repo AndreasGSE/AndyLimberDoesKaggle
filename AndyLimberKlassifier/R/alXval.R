@@ -12,9 +12,10 @@
 #' @param vars Vector of column indices for the features to be used in the random forest.
 #' Defaults to NA and all features are used. 
 #' @param seed The seed to be used.
+#' @param select between "alKK" or "alXGB" for the desired cross validation
 #' @return Vector of out of sample accuracy
 #' @export
-alXvalidate <- function(n = 5, m = 9000, data, NT = 100, MT = 12, NS = 25, vars = NA, seed = 123){
+alXval <- function(n = 5, m = 9000, data, NT = 100, MT = 12, NS = 25, vars = NA, seed = 123, method = "alKK"){
   set.seed(seed)
   
   score <- rep(0,n)
@@ -25,7 +26,11 @@ alXvalidate <- function(n = 5, m = 9000, data, NT = 100, MT = 12, NS = 25, vars 
     trialTrain <- data[-trialVec,]
     trialTest <- data[trialVec,]
     
-    score[i] <- alKK(trialTrain, trialTest, NT = NT, MT = MT, NS = NS, Xtest = T, vars = vars)
+    if(method == "alKK"){
+      score[i] <- alKK(trialTrain, trialTest, NT = NT, MT = MT, NS = NS, Xtest = T, vars = vars)
+    }else if (method == "alXGB"){
+      score[i] <- alXGB(trialTrain, trialTest)
+    }
   }
   
   print(mean(score))
