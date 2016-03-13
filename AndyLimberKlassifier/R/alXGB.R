@@ -3,25 +3,25 @@
 #----------------------------------------#
 #' Andy Limber's Kaggle xgboost function
 #' 
-#' Runs xgboost algorithm on training and test set
+#' Train an xgboost classifier on training set and predict for test set. 
+#' Can be done on its own for testing, but also will be run as part of 
+#' the alKK function for final classification.
 #' 
 #' @param train A dataframe containing the training data. Cannot include any text variables,
 #' URL is already taken care of in the function. Requires it to be the second column.
 #' @param test A dataframe containing the test data. See train for conditions on
 #' variables
-#' @param nr Integer. The maximum number of rounds performed.
+#' @param NR Integer. The maximum number of rounds performed.
 #' @param eta Double. Controls the learning rate, 0 < eta < 1, determines the level 
 #' of contribution of each tree.
 #' @param gamma Integer. Minimum loss reduction required to make a futher cut on a 
 #' leaf node, a larger value for this parameter translates to a more 
 #' conservative algorithm. 
-#' @param mcw Integer. Minimum child weight: minimum sum of instance weight needed 
+#' @param MCW Integer. Minimum child weight: minimum sum of instance weight needed 
 #' to form a child node.
-#' @param ss Double. Subsample: ratio of the training set used to train.
+#' @param SS Double. Subsample: ratio of the training set used to train.
 #' @param colsbt Double. Column sample by tree: subsample ratio of columns for 
 #' constructing each tree.
-#' @param npt Integer. Number of parallel trees: an experimental parameter, 
-#' number of trees to grow per interation.
 #' @param vars Vector of variables to be EXCLUDED from the training. Note
 #' that this is differently defined to the random forest function.
 #' @param seed The seed to be used.
@@ -37,8 +37,8 @@
 #' @import xgboost
 #' @import assertthat
 
-alXGB <-function(train, test, nr= 700, eta = 0.01, gamma = 1, mcw = 2, ss = 0.5, 
-                 colsbt = 1, npt = 1, vars = NULL, Xtest = FALSE, CSV = TRUE, seed = 123){
+alXGB <-function(train, test, NR = 700, eta = 0.01, gamma = 1, MCW = 2, SS = 0.5, 
+                 colsbt = 1, vars = NULL, Xtest = FALSE, CSV = TRUE, seed = 123){
   set.seed(seed) 
   
   # testing inputs
@@ -68,25 +68,25 @@ alXGB <-function(train, test, nr= 700, eta = 0.01, gamma = 1, mcw = 2, ss = 0.5,
   # To optimise need to look at the parameters of xgboost - see xgb.train
   print("Getting xgboosted trees")
   xg.boost <- xgboost(data = train, label = trainPop,
-                       nrounds = nr, eta = eta, subsample = ss, min_child_weight = mcw,
-                       number_parallel_tree = npt, colsample_bytree = colsbt, 
-                       objective = "multi:softprob", num_class = 5)
+                       nrounds = NR, eta = eta, subsample = SS, min_child_weight = MCW,
+                       colsample_bytree = colsbt, objective = "multi:softprob", num_class = 5,
+                      verbose = 0)
   
   # Predicting labels
   print("Getting labels")
   xgbpred <- predict(xg.boost, test) # this gives us a list of probabilities
   probs <- t(matrix(xgbpred, nrow=5, ncol=length(xgbpred)/5)) # transform to a matrix 
   
-  Prediction <- apply(probs, 1, which.max) # get the label
+  predLabs <- apply(probs, 1, which.max) # get the label
   
-  popularityClass <- data.frame(id = testID, popularity = Prediction)
+  popularityClass <- data.frame(id = testID, popularity = predLabs)
   
   popularityClass <- cbind(popularityClass, probs)
   
   
   # Comparing values for training and test set
   if(Xtest){
-    acc <- mean(ifelse(Prediction == (testPop + 1), 1, 0))
+    acc <- mean(ifelse(predLabs == (testPop + 1), 1, 0))
     print(acc)
     return(acc)
   }

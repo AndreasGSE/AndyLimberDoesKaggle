@@ -1,19 +1,18 @@
 context("Output checking of classifier fuction")
 
-# Running the random forest for a low number of trees for speed
+alXGB.control <- list(NR = 5, eta = 1, gamma = 1, MCW = 1, SS = 0.5, 
+                      colsbt = 1, vars = NULL)
+alRF.control <- list(NT = 1, MT = 12, NS = 25, vars = NULL)
+
+# Will run on feature gen data as that is appropriate for submission
 trainN <- alFeatureGen(train)
 testN <- alFeatureGen(test)
-testForest <- alKK(trainN, testN, NT = 10, CSV = F)
+testSub <- alKK(trainN, testN, alXGB.control = alXGB.control, alRF.control = alRF.control,
+                CSV = F)
 
-# Expect output of the form "model"
+# Expect output as a dataframe
 test_that("Structure of output", {
-  expect_output(str(testForest), "data.frame")
-})
-
-# Xtesting
-test_that("Testing to see how Xtest works", {
-  expect_error(alKK(train, test, NT = 1, CSV = F, Xtest = T), 
-               "Error : test$popularity has an empty dimension", fixed = TRUE)
+  expect_output(str(testSub), "data.frame")
   
-  expect_output(alKK(trainN[1:100,], trainN[101:200,], NT = 1, CSV = F, Xtest = T), "0.")
+  expect_equal(nrow(testSub), nrow(test))
 })

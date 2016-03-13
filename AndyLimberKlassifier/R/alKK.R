@@ -6,17 +6,21 @@
 #' Assign popularity values to news articles for submission to Kaggle. Can be used with
 #' any set of features as unreferenced by name, but best submission includes feature generation
 #' done by the alFeatuerGen function (must be called on train and test data separately).
+#' The random forest and xgboost functions are both called internally.
 #'
 #' @param train A dataframe containing the training data for the
 #' popularity classifications.
 #' @param test A dataframe containing the data to be used to predict labels.
 #' If a column of NAs is not supplied for the "popularity", one will be added.
-#' @param NT Integer. The number of trees used by the forest (ntree).
-#' @param MT Integer. The mtry parameter for randomForest.
-#' @param NS Integer. The nodesize parameter.
 #' @param vars Vector of column indices for the features to be used in the random forest.
-#' Defaults to NA and all features are used.
-#' @param imp Logical. Whether or not the importance should be calculated (default is false).
+#' Defaults to NULL and all features are used.
+#' @param thresh The probability threshold for favouring a method. thresh = 0 would use
+#' only alXGB. thresh = 1 would use only alRF.
+#' @param alXGB.control Optional list containing parameters for alXGB. All must be named params
+#' must be named and provided according to alXGB documentation. Train, test, seed, and
+#' TRUE / FALSE parameters do not need to be provided.
+#' @param alRF.control Optional list containing parameters for alRF. See alXGB.control. 
+#' Vars argument does not need to be the same for both functions.
 #' @param seed The seed to be used.
 #' @param Xtest A logical that indicates whether you want to perform some
 #' cross validation. Default is FALSE. If TRUE, will print an accuracy value.
@@ -26,65 +30,55 @@
 #' @return Returns the predicted labels, probabilities and IDs, as well 
 #' as a CSV of predictions if CSV is set to TRUE.
 #' If Xtest is set to true, will return an accuracy.
-#' @export
-#' @import assertthat
-#' @import randomForest
 
-alKK <- function(train, test, NT = 1000, MT = 12, NS = 25, vars = NA, imp = FALSE,
+alKK <- function(train, test, vars = NULL, thresh = 0.4, 
+                 alXGB.control = NULL, alRF.control = NULL,
                  seed = 123, Xtest = FALSE, CSV = TRUE){
-  set.seed(seed)
-
-  # testing inputs
-  not_empty(test); not_empty(train);
-
-  if(Xtest){
-    assert_that(noNA(test$popularity)) # making sure we have values
-    assert_that(not_empty(test$popularity))
-  } 
-
-  # Will not work if things are in a different order / under different names
-  assert_that(ncol(train) == ncol(test) | (ncol(train) - 1) == ncol(test))
-  assert_that(are_equal(names(train), names(test)) | 
-                are_equal(names(train), c(names(test), "popularity")))
   
-  # Making sure popularity is the last column
-  assert_that(names(train)[ncol(train)] == "popularity")
-
-  # Getting the variables for formula, requires "popularity" to come last
-  if(is.na(vars)){
-    vars <- 3:(ncol(train)-1) # taking all variables
+  # Getting a fit for xgb
+  if(is.null(alXGB.control)){
+    resXGB <- alXGB(train, test, vars = vars, seed = seed, CSV = F)
+  } else {
+    resXGB <- alXGB(train, test, vars = alXGB.control$vars, seed = seed, CSV = F,
+                    NR = alXGB.control$NR, eta = alXGB.control$eta,
+                    gamma = alXGB.control$gamma, MCW = alXGB.control$MCW,
+                    SS = alXGB.control$SS, colsbt = alXGB.control$colsbt)
   }
   
-  variables <- names(train)[vars]
-  features <- paste(variables,collapse = "+")
-  form <- as.formula(paste0("as.factor(popularity)~",
-                            features))
-
-  # Getting the random tree with specified features
-  print("Generating Random Tree. This may take a while...")
-  randomFor <- randomForest(form, data = train, importance = imp, ntree = NT,
-                             OOB = T, nodesize = NS, mtry = MT)
-
-  # Predicting labels
-  print("Getting labels")
-  Prediction <- predict(randomFor, test, type = "class")
-  probs <- predict(randomFor, test, type = "prob")
-
-  popularityClass <- data.frame(id = test$id, popularity = Prediction)
+  # Getting a fit for RF
+  if(is.null(alRF.control)){
+    resRF <- alRF(train, test,  vars = vars, seed = seed, CSV = F)
+  } else {
+    resRF <- alRF(train, test,  vars = vars, seed = seed, CSV = F,
+                  NT = alRF.control$NT, MT = alRF.control$MT, 
+                  NS = alRF.control$NS, vars = alRF.control$vars)
+  }
   
-  popularityClass <- cbind(popularityClass, probs)
-
+  # Extracting the max probabilities and the predictions for both
+  maxP.xgb <- apply(resXGB$prob, 1, max)
+  maxP.rf <- apply(resRF$prob, 1, max)
+  
+  predL.xgb <- resXGB$popularity
+  predL.rf <- resXGB$popularity
+  
+  # Here we choose how to "mix" the two models
+  predLabs <- ifelse(maxP.xgb > thresh, predL.xgb, predL.rf)
+  
+  popularityClass <- data.frame(id = test$id, popularity = predLabs)
+  
   # Comparing values for training and test set
   if(Xtest){
-    acc <- mean(ifelse(popularityClass$popularity == test$popularity, 1, 0))
+    acc <- mean(ifelse(predLabs == test$popularity, 1, 0))
     print(acc)
     return(acc)
   }
-
+  
   # Printing CSV
   if(CSV){
     write.csv(popularityClass,"kagglesub.csv", row.names = F, quote = F)
   }
-
+  
   return(popularityClass)
+  
+  
 }
