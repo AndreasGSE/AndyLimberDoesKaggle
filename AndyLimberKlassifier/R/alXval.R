@@ -16,7 +16,7 @@
 #' @return Vector of out of sample accuracy
 #' @import assertthat
 #' @export
-alXval <- function(n = 5, m = 9000, data, NT = 100, MT = 12, NS = 25, vars = NA, seed = 123, method = "rf"){
+alXvalidate <- function(n = 5, m = 9000, data, NT = 100, MT = 12, NS = 25, vars = NA, seed = 123, method = "rf"){
   set.seed(seed)
   assert_that(method %in% c("rf", "xgb"))
   
