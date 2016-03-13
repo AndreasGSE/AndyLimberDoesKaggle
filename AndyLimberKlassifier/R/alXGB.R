@@ -45,8 +45,8 @@ alXGB <-function(train, test, nr= 700, eta = 0.01, gamma = 1, mcw = 2, ss = 0.5,
   not_empty(test); not_empty(train);
   
   # Will produce an error if we include text columns, so require right order
-  assert_that(sum(names(train) == c("id", "url")) == 1) 
-  assert_that(sum(names(train) == c("id", "url")) == 1)
+  assert_that(mean(names(train)[c(1,2)] == c("id", "url")) == 1) 
+  assert_that(mean(names(train)[c(1,2)] == c("id", "url")) == 1)
   
   if(Xtest){
     assert_that(noNA(test$popularity)) # making sure we have values
@@ -60,8 +60,10 @@ alXGB <-function(train, test, nr= 700, eta = 0.01, gamma = 1, mcw = 2, ss = 0.5,
   train$popularity = NULL # no formula, must blank the target column
   test$popularity = NULL
   
-  xg.train <- as.matrix(apply(train[,-c(1,2, vars)], 2, as.numeric)) # only matrices
-  xg.test <- as.matrix(apply(test[,-c(1,2, vars)], 2, as.numeric))
+  testID <- test$id
+  
+  train <- as.matrix(apply(train[,-c(1,2, vars)], 2, as.numeric)) # only matrices
+  test <- as.matrix(apply(test[,-c(1,2, vars)], 2, as.numeric))
   
   # To optimise need to look at the parameters of xgboost - see xgb.train
   print("Getting xgboosted trees")
@@ -77,7 +79,7 @@ alXGB <-function(train, test, nr= 700, eta = 0.01, gamma = 1, mcw = 2, ss = 0.5,
   
   Prediction <- apply(probs, 1, which.max) # get the label
   
-  popularityClass <- data.frame(id = test$id, popularity = Prediction)
+  popularityClass <- data.frame(id = testID, popularity = Prediction)
   
   popularityClass <- cbind(popularityClass, probs)
   
