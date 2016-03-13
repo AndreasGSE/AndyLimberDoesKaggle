@@ -12,7 +12,7 @@
 #' @param vars Vector of column indices for the features to be used in the random forest.
 #' Defaults to NA and all features are used. 
 #' @param seed The seed to be used.
-#' @param select between "alKK" or "alXGB" for the desired cross validation
+#' @param method Select between "alKK" or "alXGB" for the desired cross validation.
 #' @return Vector of out of sample accuracy
 #' @export
 alXval <- function(n = 5, m = 9000, data, NT = 100, MT = 12, NS = 25, vars = NA, seed = 123, method = "alKK"){
