@@ -31,7 +31,7 @@ alXvalidate <- function(n = 5, m = 9000, data, NT = 100, MT = 12, NS = 25, vars 
     if(method == "rf"){
       score[i] <- alKK(trialTrain, trialTest, NT = NT, MT = MT, NS = NS, Xtest = T, vars = vars)
     }else if (method == "xgb"){
-      score[i] <- alXGB(trialTrain, trialTest)
+      score[i] <- alXGB(trialTrain, trialTest, Xtest = T)
     }
   }
   
