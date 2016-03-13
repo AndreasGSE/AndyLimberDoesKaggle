@@ -14,9 +14,11 @@
 #' @param seed The seed to be used.
 #' @param method Select between "alKK" or "alXGB" for the desired cross validation.
 #' @return Vector of out of sample accuracy
+#' @import assertthat
 #' @export
-alXval <- function(n = 5, m = 9000, data, NT = 100, MT = 12, NS = 25, vars = NA, seed = 123, method = "alKK"){
+alXval <- function(n = 5, m = 9000, data, NT = 100, MT = 12, NS = 25, vars = NA, seed = 123, method = "rf"){
   set.seed(seed)
+  assert_that(method %in% c("rf", "xgb"))
   
   score <- rep(0,n)
   for(i in 1:n){
@@ -26,9 +28,9 @@ alXval <- function(n = 5, m = 9000, data, NT = 100, MT = 12, NS = 25, vars = NA,
     trialTrain <- data[-trialVec,]
     trialTest <- data[trialVec,]
     
-    if(method == "alKK"){
+    if(method == "rf"){
       score[i] <- alKK(trialTrain, trialTest, NT = NT, MT = MT, NS = NS, Xtest = T, vars = vars)
-    }else if (method == "alXGB"){
+    }else if (method == "xgb"){
       score[i] <- alXGB(trialTrain, trialTest)
     }
   }
