@@ -86,7 +86,7 @@ alXGB <-function(train, test, nr= 700, eta = 0.01, gamma = 1, mcw = 2, ss = 0.5,
   
   # Comparing values for training and test set
   if(Xtest){
-    acc <- mean(ifelse(predLabs == (testPop + 1), 1, 0))
+    acc <- mean(ifelse(Prediction == (testPop + 1), 1, 0))
     print(acc)
     return(acc)
   }
