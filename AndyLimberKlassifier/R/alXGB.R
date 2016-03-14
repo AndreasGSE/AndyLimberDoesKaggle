@@ -93,7 +93,7 @@ alXGB <-function(train, test, NR = 700, eta = 0.01, gamma = 1, MCW = 2, SS = 0.5
   
   # Printing CSV
   if(CSV){
-    write.csv(popularityClass,"kagglesub.csv", row.names = F, quote = F)
+    write.csv(popularityClass[,c(1,2)],"kagglesub.csv", row.names = F, quote = F)
   }
   
   return(popularityClass)

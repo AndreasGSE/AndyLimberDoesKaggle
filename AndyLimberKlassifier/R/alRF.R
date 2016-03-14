@@ -82,7 +82,7 @@ alKK <- function(train, test, NT = 1000, MT = 12, NS = 25, vars = NULL,
 
   # Printing CSV
   if(CSV){
-    write.csv(popularityClass,"kagglesub.csv", row.names = F, quote = F)
+    write.csv(popularityClass[,c(1,2)],"kagglesub.csv", row.names = F, quote = F)
   }
 
   return(popularityClass)

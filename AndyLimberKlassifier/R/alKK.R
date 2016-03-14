@@ -30,10 +30,14 @@
 #' @return Returns the predicted labels, probabilities and IDs, as well 
 #' as a CSV of predictions if CSV is set to TRUE.
 #' If Xtest is set to true, will return an accuracy.
+#' @export
+#' @import assertthat
 
 alKK <- function(train, test, vars = NULL, thresh = 0.4, 
                  alXGB.control = NULL, alRF.control = NULL,
                  seed = 123, Xtest = FALSE, CSV = TRUE){
+  # Input test
+  assert_that(thresh >= 0 & thresh <= 1) # as a probability thing
   
   # Getting a fit for xgb
   if(is.null(alXGB.control)){

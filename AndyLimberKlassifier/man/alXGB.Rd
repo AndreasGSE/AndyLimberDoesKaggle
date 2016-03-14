@@ -4,9 +4,8 @@
 \alias{alXGB}
 \title{Andy Limber's Kaggle xgboost function}
 \usage{
-alXGB(train, test, nr = 700, eta = 0.01, gamma = 1, mcw = 2, ss = 0.5,
-  colsbt = 1, npt = 1, vars = NULL, Xtest = FALSE, CSV = TRUE,
-  seed = 123)
+alXGB(train, test, NR = 700, eta = 0.01, gamma = 1, MCW = 2, SS = 0.5,
+  colsbt = 1, vars = NULL, Xtest = FALSE, CSV = TRUE, seed = 123)
 }
 \arguments{
 \item{train}{A dataframe containing the training data. Cannot include any text variables,
@@ -15,7 +14,7 @@ URL is already taken care of in the function. Requires it to be the second colum
 \item{test}{A dataframe containing the test data. See train for conditions on
 variables}
 
-\item{nr}{Integer. The maximum number of rounds performed.}
+\item{NR}{Integer. The maximum number of rounds performed.}
 
 \item{eta}{Double. Controls the learning rate, 0 < eta < 1, determines the level 
 of contribution of each tree.}
@@ -24,16 +23,13 @@ of contribution of each tree.}
 leaf node, a larger value for this parameter translates to a more 
 conservative algorithm.}
 
-\item{mcw}{Integer. Minimum child weight: minimum sum of instance weight needed 
+\item{MCW}{Integer. Minimum child weight: minimum sum of instance weight needed 
 to form a child node.}
 
-\item{ss}{Double. Subsample: ratio of the training set used to train.}
+\item{SS}{Double. Subsample: ratio of the training set used to train.}
 
 \item{colsbt}{Double. Column sample by tree: subsample ratio of columns for 
 constructing each tree.}
-
-\item{npt}{Integer. Number of parallel trees: an experimental parameter, 
-number of trees to grow per interation.}
 
 \item{vars}{Vector of variables to be EXCLUDED from the training. Note
 that this is differently defined to the random forest function.}
@@ -53,6 +49,8 @@ as a CSV of predictions if CSV is set to TRUE.
 If Xtest is set to true, will return an accuracy.
 }
 \description{
-Runs xgboost algorithm on training and test set
+Train an xgboost classifier on training set and predict for test set. 
+Can be done on its own for testing, but also will be run as part of 
+the alKK function for final classification.
 }
 

@@ -7,8 +7,8 @@ test_that("Making sure only valid methods", {
                fixed = TRUE)
 })
 
-testXval.RF <- Xvalidate(n = 2, m = 20, train[1:100,], NT = 1, method = "rf")
-testXval.XG <- Xvalidate(n = 2, m = 20, train[1:100,], NR = 5, method = "xgb")
+testXval.RF <- alXvalidate(n = 2, m = 20, train[1:100,], NT = 1, method = "rf")
+testXval.XG <- alXvalidate(n = 2, m = 20, train[1:100,], NR = 5, method = "xgb")
 
 # Checking outputs
 test_that("Looking at output", {
