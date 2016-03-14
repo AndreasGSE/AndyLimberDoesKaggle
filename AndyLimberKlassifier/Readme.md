@@ -9,3 +9,5 @@ These two functions are called and combined finally in the alKK function. All da
 All classification functions will return by default a data frame with the predicted labels and probabilities of each class. A csv will also be written in the correct format for submission, by default. It is also possible to return an out of sample classification accuracy, setting Xtest to true. This requires a non-NA popularity column.
 
 A function alXvalidate is also provided to allow a k fold cross validation, packaged into a simple function. The function will just run the classification on k separate samples to validate and test any changes made. All the normal parameters can be played with. The method parameter also allows the choice of which function to test, out of alRF, alXGB, and alKK. Typically most stable over a 10 fold validation.
+
+To properly install the package so that you can view the vignette, the argument build_vignettes = TRUE must be included when stalled using devtools (e.g. installing from github).
