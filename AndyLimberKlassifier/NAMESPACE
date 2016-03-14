@@ -2,6 +2,7 @@
 
 export(alFeatureGen)
 export(alKK)
+export(alRF)
 export(alXGB)
 export(alXvalidate)
 import(assertthat)

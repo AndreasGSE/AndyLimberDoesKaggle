@@ -11,7 +11,11 @@ vignette: >
 
 The Andy Limber Klassifier is intended to be a package for submission of classifications to the Kaggle competition for Advanced Computing and Machine Learning classes. It is primarily composed of two functions, `alFeatureGen` and `alKK`, which generate additional features and provide classifications, respectively.
 
-The intended usage for submission is to provide features to BOTH the training and test sets and then feeding the modified data into the classifier. This will then save a CSV file of classifications. The actual random forest model will be returned, with or without the importance, as specified by the argument `imp`. All default arguments are the ones used for the current best classification submission.
+The `alKK` function is the actual classifier, which is a mixture of a random forest and extreme gradient boosted trees. Inside the function, the two models are trained on the training set and predict the test set. The final classification is then a combination of the two, where the XGboost labels are taken, unless the prediction probability is below a certain threshold. In this case, the predicted label from the random forest is taken. Two extra functions, `alXGB` and `alRF` are provided, to train each of these models on their own, outside of the final classification. This was done to better study their behaviour on their own.
+
+These three functions all operate in a similar way, where parameters can be specified at the start, and the predicted labels are returned in a data frame. In the case of `alXGB` and `alRF`, the probabilities for each of the five classes are returned. All three will also, by default, write a CSV of the predicted labels.
+
+The intended usage for submission is to generate features for BOTH the training and test sets and then feeding the modified data into the classifier. This will then save a CSV file of classifications. All default arguments are the ones used for the current best classification submission.
 ```{r, eval=FALSE}
 trainData <- read.csv("news_popularity_training.csv", stringsAsFactors = T)
 testData <- read.csv("news_popularity_test.csv", stringsAsFactors = T)
@@ -22,9 +26,9 @@ test <- alFeatureGen(testData)
 alKK(train, test)
 ```
 
-The data provided should be of the same form as that provided by default in the competition with no other modifications, as the `popularity` column is required to be last for the `alKK` function. If modifications have been made, the feature generation will still work, but will re-arrange the columns.
+The data provided should be of the same form as that provided by default in the competition with no other modifications, as the `popularity` column is required to be last for the `alKK` function (as well as the two individual classifiers). If modifications have been made, the feature generation will still work, but will re-arrange the columns upon output.
 
-There is also an allowance for cross validating, which can be specified using the `Xtest` argument to `alKK`. This requires training and test data with non-empty and non-NA values for the popularity column. An accuracy value will be printed afterwards.
+There is also an allowance for cross validating, which can be specified using the `Xtest`. This requires training and test data with non-empty and non-NA values for the popularity column. The classification accuracy will then be returned. This is implemented for all classifiers.
 ```{r, eval=FALSE}
 trainData <- read.csv("news_popularity_training.csv", stringsAsFactors = T)
 
@@ -35,6 +39,19 @@ subTest <- train[-(1:20000),]
 
 
 alKK(subTrain, subTest, Xtest = T, CSV = F)
+alRF(subTrain, subTest, Xtest = T, CSV = F)
+alXGB(subTrain, subTest, Xtest = T, CSV = F)
 ```
 
-The current added features are just date columns as well as title length columns. In the future, more will hopefully be added and the function will be modified accordingly. Currently the names of the added columns are `Year`, `Month` and `Title`.
+This is expanded upon in the `alXvalidate` function. This acts as a way to perform k-fold cross validation, in a neat wrapper. The function takes only a single data frame (with popularity provided), and splits it into a training and test set (the size of which can be specified). Then, one of the classifiers (which is specified by the user) is run with Xtest set to true. This process is repeated $k$ times and a mean accuracy is reported.
+```{r, eval=FALSE}
+trainData <- read.csv("news_popularity_training.csv", stringsAsFactors = T)
+
+train <- alFeatureGen(trainData)
+
+method <- c("rf", "xgb", "alkk")
+
+alXvalidate(k = 5, m = 9000, train, method = method[1])
+```
+
+For `alFeatureGen`, the current added features are just date columns, title length, and a yes/no for whether a video is included. As new features are found to improve accuracy, they are added. This is the advantage of a standalone function doing this, as everything is independent. Currently the names of the added columns are `Year`, `Month`, `Title`, and `is_video`.

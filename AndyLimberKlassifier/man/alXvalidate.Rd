@@ -4,12 +4,12 @@
 \alias{alXvalidate}
 \title{Andy Limber's X validation}
 \usage{
-alXvalidate(n = 5, m = 9000, data, NT = 100, MT = 12, NS = 25,
+alXvalidate(k = 5, m = 9000, data, NT = 100, MT = 12, NS = 25,
   NR = 700, eta = 0.01, gamma = 1, MCW = 2, SS = 0.5, colsbt = 1,
   thresh = 0.4, vars = NULL, seed = 123, method)
 }
 \arguments{
-\item{n}{The number of validations done.}
+\item{k}{The number of validations done.}
 
 \item{m}{The size of the validation sample.}
 
@@ -21,12 +21,19 @@ alXvalidate(n = 5, m = 9000, data, NT = 100, MT = 12, NS = 25,
 
 \item{NS}{Integer. The nodesize parameter.}
 
+\item{NR}{Integer. The maximum number of rounds performed.}
+
 \item{eta}{Double. Controls the learning rate, 0 < eta < 1, determines the level 
 of contribution of each tree.}
 
 \item{gamma}{Integer. Minimum loss reduction required to make a futher cut on a 
 leaf node, a larger value for this parameter translates to a more 
 conservative algorithm.}
+
+\item{MCW}{Integer. Minimum child weight: minimum sum of instance weight needed 
+to form a child node.}
+
+\item{SS}{Double. Subsample: ratio of the training set used to train.}
 
 \item{colsbt}{Double. Column sample by tree: subsample ratio of columns for 
 constructing each tree.}
@@ -41,13 +48,6 @@ Defaults to NULL and all features are used.}
 
 \item{method}{Select between "rf" for alRF, "xgb" for alXGB, or "alKK" for al KK,
 for the desired cross validation.}
-
-\item{nr}{Integer. The maximum number of rounds performed.}
-
-\item{mcw}{Integer. Minimum child weight: minimum sum of instance weight needed 
-to form a child node.}
-
-\item{ss}{Double. Subsample: ratio of the training set used to train.}
 }
 \value{
 Vector of out of sample accuracy

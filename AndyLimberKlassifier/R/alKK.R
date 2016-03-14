@@ -53,14 +53,14 @@ alKK <- function(train, test, vars = NULL, thresh = 0.4,
   if(is.null(alRF.control)){
     resRF <- alRF(train, test,  vars = vars, seed = seed, CSV = F)
   } else {
-    resRF <- alRF(train, test,  vars = vars, seed = seed, CSV = F,
+    resRF <- alRF(train, test,  vars = alRF.control$vars, seed = seed, CSV = F,
                   NT = alRF.control$NT, MT = alRF.control$MT, 
-                  NS = alRF.control$NS, vars = alRF.control$vars)
+                  NS = alRF.control$NS)
   }
   
   # Extracting the max probabilities and the predictions for both
-  maxP.xgb <- apply(resXGB$prob, 1, max)
-  maxP.rf <- apply(resRF$prob, 1, max)
+  maxP.xgb <- apply(resXGB[,c(3:7)], 1, max)
+  maxP.rf <- apply(resRF[,c(3:7)], 1, max)
   
   predL.xgb <- resXGB$popularity
   predL.rf <- resXGB$popularity

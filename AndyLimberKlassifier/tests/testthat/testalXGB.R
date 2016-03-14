@@ -8,7 +8,7 @@ test_that("Testing to see how Xtest works", {
   expect_output(alXGB(train[1:100,], train[101:200,], NR = 5, CSV = F, Xtest = T), "0.")
 })
 
-testTree <- alXGB(train, test, NR = 5, CSV = F, Xtest = T)
+testTree <- alXGB(train, test, NR = 5, CSV = F)
 
 # Expect output as a dataframe
 test_that("Structure of output", {

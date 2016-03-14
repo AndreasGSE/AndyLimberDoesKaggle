@@ -5,10 +5,10 @@ test_that("Testing to see how Xtest works", {
   expect_error(alRF(train, test, NT = 1, CSV = F, Xtest = T), 
                "Error : test$popularity has an empty dimension", fixed = TRUE)
   
-  expect_output(alRF(trainN[1:100,], trainN[101:200,], NR = 5, CSV = F, Xtest = T), "0.")
+  expect_output(alRF(train[1:100,], train[101:200,], NT = 1, CSV = F, Xtest = T), "0.")
 })
 
-testTree <- alRF(train, test, NT = 1, CSV = F, Xtest = T)
+testTree <- alRF(train, test, NT = 1, CSV = F)
 # Expect output as a dataframe
 test_that("Structure of output", {
   expect_output(str(testTree), "data.frame")

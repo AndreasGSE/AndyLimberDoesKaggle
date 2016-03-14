@@ -29,7 +29,7 @@
 #' @import assertthat
 #' @import randomForest
 
-alKK <- function(train, test, NT = 1000, MT = 12, NS = 25, vars = NULL,
+alRF <- function(train, test, NT = 1000, MT = 12, NS = 25, vars = NULL,
                  seed = 123, Xtest = FALSE, CSV = TRUE){
   set.seed(seed)
 
