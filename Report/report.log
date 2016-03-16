@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.12.9)  16 MAR 2016 14:32
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.12.9)  16 MAR 2016 14:39
 entering extended mode
 **report.tex
 
@@ -201,23 +201,25 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 13.
 [1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
-<variables.pdf, id=11, 433.62pt x 289.08pt>
-File: variables.pdf Graphic file (type pdf)
- <use variables.pdf>
-Package pdftex.def Info: variables.pdf used on input line 43.
+<ClassAccRFvariables.pdf, id=11, 433.62pt x 289.08pt>
+File: ClassAccRFvariables.pdf Graphic file (type pdf)
+
+<use ClassAccRFvariables.pdf>
+Package pdftex.def Info: ClassAccRFvariables.pdf used on input line 43.
 (pdftex.def)             Requested size: 408.0197pt x 203.9955pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <9> on input line 44.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 44.
-
-<rfrfnf.pdf, id=13, 1011.78pt x 614.295pt>
+ <rfrfnf.pdf, id=13, 1011.78pt x 614.295pt>
 File: rfrfnf.pdf Graphic file (type pdf)
- <use rfrfnf.pdf>
+
+<use rfrfnf.pdf>
 Package pdftex.def Info: rfrfnf.pdf used on input line 53.
 (pdftex.def)             Requested size: 408.00867pt x 203.99275pt.
  [2 <C:/Users/Dre/Dropbox/Barna/Master/AdvancedComputing/kagglecomp/AndyLimberD
-oesKaggle/Report/variables.pdf>] <rfxgb.pdf, id=25, 1011.78pt x 614.295pt>
+oesKaggle/Report/ClassAccRFvariables.pdf>]
+<rfxgb.pdf, id=25, 1011.78pt x 614.295pt>
 File: rfxgb.pdf Graphic file (type pdf)
  <use rfxgb.pdf>
 Package pdftex.def Info: rfxgb.pdf used on input line 63.
@@ -247,7 +249,7 @@ ing/kagglecomp/AndyLimberDoesKaggle/Report/rem45.pdf>] [5]
 aggle\Report\report.aux) ) 
 Here is how much of TeX's memory you used:
  4054 strings out of 493921
- 54286 string characters out of 3147288
+ 54336 string characters out of 3147288
  123442 words of memory out of 3000000
  7331 multiletter control sequences out of 15000+200000
  17543 words of font info for 45 fonts, out of 3000000 for 9000
@@ -261,7 +263,7 @@ MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.
 9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/ty
 pe1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/
 times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb>
-Output written on report.pdf (5 pages, 120883 bytes).
+Output written on report.pdf (5 pages, 120892 bytes).
 PDF statistics:
  91 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
