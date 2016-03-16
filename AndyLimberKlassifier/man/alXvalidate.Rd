@@ -6,7 +6,8 @@
 \usage{
 alXvalidate(k = 5, m = 9000, data, NT = 100, MT = 12, NS = 25,
   NR = 700, eta = 0.01, gamma = 1, MCW = 2, SS = 0.5, colsbt = 1,
-  thresh = 0.4, vars = NULL, seed = 123, method)
+  thresh = 0.4, alXGB.control = NULL, alRF.control = NULL, vars = NULL,
+  seed = 123, method)
 }
 \arguments{
 \item{k}{The number of validations done.}
@@ -40,6 +41,10 @@ constructing each tree.}
 
 \item{thresh}{The probability threshold for favouring a method. thresh = 0 would use
 only alXGB. thresh = 1 would use only alRF.}
+
+\item{alXGB.control}{Control parameters for alKK}
+
+\item{alRF.control}{Control parameters for alKK}
 
 \item{vars}{Vector of column indices for the features to be used in the random forest.
 Defaults to NULL and all features are used.}

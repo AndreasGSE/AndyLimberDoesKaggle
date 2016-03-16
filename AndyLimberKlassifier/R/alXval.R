@@ -21,7 +21,9 @@
 #' @param colsbt Double. Column sample by tree: subsample ratio of columns for 
 #' constructing each tree.
 #' @param thresh The probability threshold for favouring a method. thresh = 0 would use
-#' only alXGB. thresh = 1 would use only alRF. 
+#' only alXGB. thresh = 1 would use only alRF.
+#' @param alXGB.control Control parameters for alKK
+#' @param alRF.control Control parameters for alKK 
 #' @param vars Vector of column indices for the features to be used in the random forest.
 #' Defaults to NULL and all features are used. 
 #' @param seed The seed to be used.
@@ -32,7 +34,8 @@
 #' @export
 alXvalidate <- function(k = 5, m = 9000, data, NT = 100, MT = 12, NS = 25, 
                         NR = 700, eta = 0.01, gamma = 1, MCW = 2, SS = 0.5, 
-                        colsbt = 1, thresh = 0.4, vars = NULL, seed = 123, method){
+                        colsbt = 1, thresh = 0.4, alXGB.control = NULL,
+                        alRF.control = NULL, vars = NULL, seed = 123, method){
   set.seed(seed)
   assert_that(method %in% c("rf", "xgb", "alkk"))
   
@@ -50,7 +53,8 @@ alXvalidate <- function(k = 5, m = 9000, data, NT = 100, MT = 12, NS = 25,
       score[i] <- alXGB(trialTrain, trialTest, NR = NR, eta = eta, gamma = gamma, 
                         MCW = MCW, SS = SS, Xtest = T, vars = vars)
     } else if(method == "alkk"){
-      score[i] <- alKK(trialTrain, trialTest, thresh = thresh, Xtest = T, vars = vars)
+      score[i] <- alKK(trialTrain, trialTest, thresh = thresh, Xtest = T, vars = vars,
+                       alXGB.control = alXGB.control, alRF.control = alRF.control)
     }
   }
   

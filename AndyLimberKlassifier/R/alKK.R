@@ -59,11 +59,11 @@ alKK <- function(train, test, vars = NULL, thresh = 0.4,
   }
   
   # Extracting the max probabilities and the predictions for both
-  maxP.xgb <- apply(resXGB[,c(3:7)], 1, max)
-  maxP.rf <- apply(resRF[,c(3:7)], 1, max)
+  maxP.xgb <- apply(resXGB[,c(3:ncol(resXGB))], 1, max)
+  maxP.rf <- apply(resRF[,c(3:ncol(resRF))], 1, max)
   
   predL.xgb <- resXGB$popularity
-  predL.rf <- resXGB$popularity
+  predL.rf <- resRF$popularity
   
   # Here we choose how to "mix" the two models
   predLabs <- ifelse(maxP.xgb > thresh, predL.xgb, predL.rf)
