@@ -15,7 +15,7 @@ The `alKK` function is the actual classifier, which is a mixture of a random for
 
 These three functions all operate in a similar way, where parameters can be specified at the start, and the predicted labels are returned in a data frame. In the case of `alXGB` and `alRF`, the probabilities for each of the five classes are returned. All three will also, by default, write a CSV of the predicted labels.
 
-The intended usage for submission is to generate features for BOTH the training and test sets and then feeding the modified data into the classifier. This will then save a CSV file of classifications. All default arguments are the ones used for the current best classification submission.
+The intended usage for submission is to generate features for BOTH the training and test sets and then feeding the modified data into the classifier. This will then save a CSV file of classifications. All default arguments are the ones used for the current best classification submission. The current best submission removes the rows of data that have popularity $4$ or $5$.
 ```{r, eval=FALSE}
 trainData <- read.csv("news_popularity_training.csv", stringsAsFactors = T)
 testData <- read.csv("news_popularity_test.csv", stringsAsFactors = T)
@@ -23,7 +23,9 @@ testData <- read.csv("news_popularity_test.csv", stringsAsFactors = T)
 train <- alFeatureGen(trainData)
 test <- alFeatureGen(testData)
 
-alKK(train, test)
+elim <- ifelse(train$popularity == 4 | train$popularity == 5, FALSE, TRUE)
+
+alKK(train[elim,], test)
 ```
 
 The data provided should be of the same form as that provided by default in the competition with no other modifications, as the `popularity` column is required to be last for the `alKK` function (as well as the two individual classifiers). If modifications have been made, the feature generation will still work, but will re-arrange the columns upon output.

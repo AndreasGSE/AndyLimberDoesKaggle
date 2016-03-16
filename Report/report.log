@@ -1,0 +1,268 @@
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.12.9)  16 MAR 2016 12:07
+entering extended mode
+**report.tex
+
+(C:\Users\Dre\Dropbox\Barna\Master\AdvancedComputing\kagglecomp\AndyLimberDoesK
+aggle\Report\report.tex
+LaTeX2e <2011/06/27>
+Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
+abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
+croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
+lician, german, german-x-2012-05-30, greek, gujarati, hindi, hungarian, iceland
+ic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latvian,
+ lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, n
+german-x-2012-05-30, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
+ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
+an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
+ishmax, welsh, loaded.
+("C:\Program Files\MiKTeX 2.9\tex\latex\revtex4\revtex4.cls"
+Document Class: revtex4 2001/08/03 v4.0 (http://publish.aps.org/revtex4/ for do
+cumentation)
+ Copyright (c) 2001 The American Physical Society.
+ mailto:revtex@aps.org
+ Licensed under the LPPL:
+http://www.ctan.org/tex-archive/macros/latex/base/lppl.txt
+ Arthur Ogawa <ogawa@teleport.com>
+ Based on work by David Carlisle <david@dcarlisle.demon.co.uk>.
+ltxutil: portions licensed from W. E. Baxter (web@superscript.com)
+Class revtex4 Info: Repairing broken LateX \@sect on input line 596.
+\intertabularlinepenalty=\count79
+\@tbpen=\count80
+\@arstrutbox@hline=\box26
+Class revtex4 Info: Repairing broken LaTeX \@xbitor on input line 1610.
+ltxgrid: portions licensed from W. E. Baxter (web@superscript.com)
+\c@linecount=\count81
+\output=\toks14
+\@protection@box=\box27
+\@topmark@saved=\toks15
+\footins@saved=\box28
+\pagesofar=\box29
+\footbox=\box30
+\pagegrid@col=\count82
+Class revtex4 Info: Incorporating package {textcase}  [1998/11/12 v0.06 Text on
+ly upper/lower case changing (DPC)]. on input line 3682.
+("C:\Program Files\MiKTeX 2.9\tex\latex\ltxmisc\url.sty"
+\Urlmuskip=\muskip10
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+)
+\c@affil=\count83
+\absbox=\box31
+\c@part=\count84
+\c@section=\count85
+\c@subsection=\count86
+\c@subsubsection=\count87
+\c@paragraph=\count88
+\c@subparagraph=\count89
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\c@figure=\count90
+\c@table=\count91
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\natbib\natbib.sty"
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip43
+\bibsep=\skip44
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count92
+)
+\widetext@top=\box32
+\widetext@bot=\box33
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\revtex4\revsymb.sty"
+Package: revsymb 2001/08/03 v4.0 (http://publish.aps.org/revtex4/ for documenta
+tion)
+LaTeX Info: Redefining \REV@mathfrak on input line 118.
+))
+("C:\Program Files\MiKTeX 2.9\tex\latex\revtex4\aps.rtx"
+File: aps.rtx 2001/08/03 v4.0 (http://publish.aps.org/revtex4/ for documentatio
+n)
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\revtex4\10pt.rtx"
+File: 10pt.rtx 2001/08/03 v4.0 (http://publish.aps.org/revtex4/ for documentati
+on)
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks16
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count93
+))
+\Gin@req@height=\dimen102
+\Gin@req@width=\dimen103
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\tools\bm.sty"
+Package: bm 2004/02/26 v1.1c Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup4
+\symboldletters=\mathgroup5
+\symboldsymbols=\mathgroup6
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 138.
+LaTeX Info: Redefining \bm on input line 204.
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\times.sty"
+Package: times 2005/04/12 PSNFSS-v9.2a (SPQR) 
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\listings.sty"
+\lst@mode=\count94
+\lst@gtempboxa=\box34
+\lst@token=\toks17
+\lst@length=\count95
+\lst@currlwidth=\dimen104
+\lst@column=\count96
+\lst@pos=\count97
+\lst@lostspace=\dimen105
+\lst@width=\dimen106
+\lst@newlines=\count98
+\lst@lineno=\count99
+\lst@maxwidth=\dimen107
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstmisc.sty"
+File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
+\c@lstnumber=\count100
+\lst@skipnumbers=\count101
+\lst@framebox=\box35
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\listings.cfg"
+File: listings.cfg 2007/02/22 1.4 listings configuration
+))
+Package: listings 2007/02/22 1.4 (Carsten Heinz)
+
+(C:\Users\Dre\Dropbox\Barna\Master\AdvancedComputing\kagglecomp\AndyLimberDoesK
+aggle\Report\report.aux)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 5.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd"
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+Class revtex4 Info: Patching LaTeX tabular. on input line 5.
+Class revtex4 Info: cite was not loaded (OK!) on input line 5.
+Class revtex4 Info: multicol was not loaded (OK!) on input line 5.
+
+("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count102
+\scratchdimen=\dimen108
+\scratchbox=\box36
+\nofMPsegments=\count103
+\nofMParguments=\count104
+\everyMPshowfont=\toks18
+\MPscratchCnt=\count105
+\MPscratchDim=\dimen109
+\MPnumerator=\count106
+\makeMPintoPDFobject=\count107
+\everyMPtoPDFconversion=\toks19
+)
+\c@lstlisting=\count108
+
+
+Class revtex4 Warning: Assuming \noaffiliation for Andreas Mathew Lloyd, Franci
+s Thomas Moynihan IV, and Feyza Seda Yilmaz.
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 8.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 10.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 13.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 13.
+[1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
+<variables.pdf, id=11, 433.62pt x 289.08pt>
+File: variables.pdf Graphic file (type pdf)
+ <use variables.pdf>
+Package pdftex.def Info: variables.pdf used on input line 43.
+(pdftex.def)             Requested size: 408.0197pt x 203.9955pt.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <9> on input line 44.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 44.
+
+<rfrfnf.pdf, id=13, 1011.78pt x 614.295pt>
+File: rfrfnf.pdf Graphic file (type pdf)
+ <use rfrfnf.pdf>
+Package pdftex.def Info: rfrfnf.pdf used on input line 53.
+(pdftex.def)             Requested size: 408.00867pt x 203.99275pt.
+ [2 <C:/Users/Dre/Dropbox/Barna/Master/AdvancedComputing/kagglecomp/AndyLimberD
+oesKaggle/Report/variables.pdf>] <rfxgb.pdf, id=25, 1011.78pt x 614.295pt>
+File: rfxgb.pdf Graphic file (type pdf)
+ <use rfxgb.pdf>
+Package pdftex.def Info: rfxgb.pdf used on input line 63.
+(pdftex.def)             Requested size: 408.00867pt x 203.99275pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<combxgb.pdf, id=27, 1011.78pt x 614.295pt>
+File: combxgb.pdf Graphic file (type pdf)
+ <use combxgb.pdf>
+Package pdftex.def Info: combxgb.pdf used on input line 83.
+(pdftex.def)             Requested size: 408.00867pt x 203.99275pt.
+ [3 <C:/Users/Dre/Dropbox/Barna/Master/AdvancedComputing/kagglecomp/AndyLimberD
+oesKaggle/Report/rfrfnf.pdf> <C:/Users/Dre/Dropbox/Barna/Master/AdvancedComputi
+ng/kagglecomp/AndyLimberDoesKaggle/Report/rfxgb.pdf>] <rem45.pdf, id=44, 1011.7
+8pt x 614.295pt>
+File: rem45.pdf Graphic file (type pdf)
+
+<use rem45.pdf>
+Package pdftex.def Info: rem45.pdf used on input line 90.
+(pdftex.def)             Requested size: 408.00867pt x 203.99275pt.
+ [4 <C:/Users/Dre/Dropbox/Barna/Master/AdvancedComputing/kagglecomp/AndyLimberD
+oesKaggle/Report/combxgb.pdf> <C:/Users/Dre/Dropbox/Barna/Master/AdvancedComput
+ing/kagglecomp/AndyLimberDoesKaggle/Report/rem45.pdf>] [5]
+(C:\Users\Dre\Dropbox\Barna\Master\AdvancedComputing\kagglecomp\AndyLimberDoesK
+aggle\Report\report.aux) ) 
+Here is how much of TeX's memory you used:
+ 4054 strings out of 493921
+ 54286 string characters out of 3147288
+ 123442 words of memory out of 3000000
+ 7331 multiletter control sequences out of 15000+200000
+ 17543 words of font info for 45 fonts, out of 3000000 for 9000
+ 841 hyphenation exceptions out of 8191
+ 27i,7n,32p,819b,293s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname
+/8r.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Progr
+am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Program Files/
+MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.
+9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/ty
+pe1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/
+times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb>
+Output written on report.pdf (5 pages, 120892 bytes).
+PDF statistics:
+ 91 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 56 words of extra memory for PDF output out of 10000 (max. 10000000)

@@ -10,4 +10,4 @@ All classification functions will return by default a data frame with the predic
 
 A function alXvalidate is also provided to allow a k fold cross validation, packaged into a simple function. The function will just run the classification on k separate samples to validate and test any changes made. All the normal parameters can be played with. The method parameter also allows the choice of which function to test, out of alRF, alXGB, and alKK. Typically most stable over a 10 fold validation.
 
-To properly install the package so that you can view the vignette, the argument build_vignettes = TRUE must be included when stalled using devtools (e.g. installing from github).
+To properly install the package so that you can view the vignette, the argument build_vignettes = TRUE must be included when stalled using devtools (e.g. installing from github). The vignette contains details of what the best submission is. No parameters need to be changed for the functions.

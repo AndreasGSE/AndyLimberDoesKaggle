@@ -43,6 +43,7 @@ alXvalidate <- function(k = 5, m = 9000, data, NT = 100, MT = 12, NS = 25,
   for(i in 1:k){
     print(i)
     
+    # Generating a random sample
     trialVec <- sample(c(1:nrow(data)), m)
     trialTrain <- data[-trialVec,]
     trialTest <- data[trialVec,]
